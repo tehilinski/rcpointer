@@ -1,12 +1,12 @@
 /** @file rcpointer.h
  *
- * Reference counted pointer.
+ * Reference counted shared pointer.
  *
  * This design is not thread-safe.
  * Uses glib's gpointer type.
- * Thanks to many sources on the web and C++ auto_ptr for assistance.
+ * Thanks to many sources on the web and C++ std::shared_ptr for ideas.
  *
- * @author     Thomas E. Hilinski <tom.hilinski@gmail.com>
+ * @author     Thomas E. Hilinski <https://github.com/tehilinski>
  * @copyright  {
  * Copyright (c) 2020 Thomas E. Hilinski. All rights reserved.
  * License: Apache License version 2.0
