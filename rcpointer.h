@@ -41,7 +41,7 @@ static inline gpointer rcp_get( rcpointer* const ptr )
 	return NULL;
 }
 
-/** Copy the pointer
+/** Copy the rcpointer.
  *  @param ptr	The rcpointer object
  *  @return	A new rcpointer object referring to the original's owned object
  */
@@ -52,14 +52,14 @@ static inline rcpointer* rcp_copy( rcpointer* const ptr )
     return ptr;
 }
 
-/** Allocate a new pointer for this object
- *  @param
- *  @param
- *  @return
+/** Allocate a new rcpointer that owns the raw pointer.
+ *  @param obj		raw pointer owned here
+ *  @param destructor	function to free obj; argument and return = obj pointer
+ *  @return		New rcpointer object
  */
 static inline rcpointer* rcp_new(
-    gpointer obj,			/**< obj is owned by returned rcpointer in data */
-    gpointer destructor )		/**< function to free obj; argument and return = obj pointer */
+    gpointer obj,
+    gpointer destructor )
 {
     rcpointer* rcp = g_new0( rcpointer, 1 );
     rcp->data = obj;
@@ -68,9 +68,9 @@ static inline rcpointer* rcp_new(
     return rcp;
 }
 
-/** Delete the copy of the pointer or  destroy the object if reference count is zero
- *  @param	The rcpointer object
- *  @return
+/** Delete the rcpointer, and destroy the raw object if reference count is zero.
+ *  @param ptr	The rcpointer object
+ *  @return	Deleted rcpointer object; will be NULL if count is zero
  */
 static inline rcpointer* rcp_delete( rcpointer* ptr )
 {

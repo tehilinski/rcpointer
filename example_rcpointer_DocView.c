@@ -1,6 +1,6 @@
 /* file: example_rcpointer_DocView.c
  * Example of model-view-controller pattern using rcpointer.
- * Relation of Doc:View is 1:Many, so the Doc object pointer is shared.
+ * Relationship of Doc:View is 1:Many, so the Doc object pointer is shared.
  *
  * Build:
  *   gcc -Wall -ggdb3 -O0 -o example_rcpointer_DocView `pkg-config --cflags --libs glib-2.0` example_rcpointer_DocView.c
