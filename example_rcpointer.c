@@ -6,7 +6,7 @@
  * Debug with valgrind:
  *   G_DEBUG=always-malloc valgrind --leak-check=full --track-origins=yes ./example_rcpointer |& tee valgrind.log
  *
- * Author; Thomas E. Hilinski <tom.hilinski@gmail.com>
+ * Author; Thomas E. Hilinski <https://github.com/tehilinski>
  * Copyright (c) 2020 Thomas E. Hilinski. All rights reserved.
  * License: Apache License version 2.0
  *          URL: http://www.apache.org/licenses/LICENSE-2.0
@@ -22,7 +22,7 @@ typedef struct Document
 
 } Document;
 
-Document* Document_constructor (
+Document* Document_new (
     gchar const * const docFilename)
 {
     Document* const pGD = g_new0( Document, 1 );
@@ -31,7 +31,7 @@ Document* Document_constructor (
     return pGD;
 }
 
-Document* Document_destructor ( Document* pGD )
+Document* Document_delete ( Document* pGD )
 {
     if ( pGD )
     {
@@ -63,8 +63,8 @@ int main ()
 
     printf( "--- make initial pointer:\n" );
     rcpointer* ptr1 = rcp_new(
-			Document_constructor("doc1.txt"),
-			Document_destructor );
+			Document_new("doc1.txt"),
+			Document_delete );
     DisplayPtr( ptr1 );
     Document_display( rcp_get( ptr1 ) );
 
