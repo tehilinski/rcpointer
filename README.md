@@ -39,11 +39,11 @@ The header comment in each example file gives the compilation command
 for gcc, and the command for running the example using valgrind to 
 show that no memory issues occur.
 
-**example_rcpointer.c**
+[example_rcpointer.c](example_rcpointer.c)
 
 Simple usage of rcpointer. Displays how a single raw pointer is contained in multiple rcpointer objects.
 
-**example_rcpointer_DocView.c**
+[example_rcpointer_DocView.c](example_rcpointer_DocView.c)
 
 Example of model-view-controller pattern using rcpointer.
 Relationship of model:view is 1:many, so the model object pointer is shared.
