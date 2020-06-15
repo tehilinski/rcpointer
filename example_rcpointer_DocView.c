@@ -48,7 +48,7 @@ Doc* Doc_delete ( Doc* doc )
 
 void Doc_print ( Doc const * const doc )
 {
-    printf( " Doc: doc->fileName = %s\n", doc->fileName );
+    printf( "   Doc: doc->fileName = %s\n", doc->fileName );
 }
 
 /*  --------------------------------------------------------------------------
@@ -56,8 +56,8 @@ void Doc_print ( Doc const * const doc )
  */
 typedef struct View
 {
-    rcpointer* doc;     /* shared Doc* */
-    gpointer widget;    /* widget to display doc */
+    rcpointer* doc;             /* shared Doc* */
+    gpointer   widget;          /* widget to display doc */
 } View;
 
 View* View_new ( rcpointer* const doc )
@@ -84,8 +84,8 @@ View* View_delete( View* view )
 
 void View_print ( View const * const view )
 {
-    printf( "View: doc->fileName = %s\n",
-	    ( (Doc*) rcp_get( view->doc ) )->fileName );
+    printf( "  View: doc->fileName = %s\n",
+            ( (Doc*) rcp_get( view->doc ) )->fileName );
 }
 
 /*  --------------------------------------------------------------------------
@@ -93,15 +93,18 @@ void View_print ( View const * const view )
  */
 typedef struct DocView
 {
-    rcpointer* doc;     /* shared Doc* */
-    View*      view;    /* pointer is owed here */
+    gchar* name;                /* name of doc-view association */
+    rcpointer* doc;             /* shared Doc* */
+    View*      view;            /* pointer is owed here */
 } DocView;
 
 DocView* DocView_new (
+    gchar const * const name,
     rcpointer* const doc,
     View* const      view)
 {
     DocView* docview = g_new0( DocView, 1 );
+    docview->name = g_strdup( name );
     docview->doc  = rcp_copy( doc );
     docview->view = view;
     return docview;
@@ -109,6 +112,7 @@ DocView* DocView_new (
 
 DocView* DocView_delete ( DocView* docview )
 {
+    g_free( docview->name );
     docview->doc  = rcp_delete( docview->doc );
     docview->view = View_delete( docview->view );
     g_free( docview );
@@ -118,6 +122,7 @@ DocView* DocView_delete ( DocView* docview )
 
 void DocView_print ( DocView const * const docview )
 {
+    printf( "%s:\n", docview->name );
     Doc_print( rcp_get( docview->doc ) );
     View_print( docview->view );
 }
@@ -136,9 +141,9 @@ int main ()
                               Doc_delete );
 
     /* make some DocView associations and add to array */
-    DocView* docview1 =  DocView_new( doc, View_new( doc ) );
+    DocView* docview1 =  DocView_new( "docview1", doc, View_new( doc ) );
     g_ptr_array_add( arrayDV, (gpointer) docview1 );
-    DocView* docview2 =  DocView_new( doc, View_new( doc ) );
+    DocView* docview2 =  DocView_new( "docview2", doc, View_new( doc ) );
     g_ptr_array_add( arrayDV, (gpointer) docview2 );
 
     /* display each DocView */
