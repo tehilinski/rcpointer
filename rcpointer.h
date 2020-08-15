@@ -74,13 +74,13 @@ static inline rcpointer* rcp_new(
  */
 static inline rcpointer* rcp_delete( rcpointer* ptr )
 {
-    if ( ptr )
+    if ( ptr && ptr->count > 0 )
     {
 	if ( --(ptr->count) == 0 )
 	{
 	    ptr->data = ptr->free( ptr->data );
 	    g_free( ptr );
-	    ptr = 0;
+	    ptr = NULL;
 	}
     }
     return ptr;
